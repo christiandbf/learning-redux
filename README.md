@@ -52,7 +52,7 @@ import {
   VisibilityFilters
 } from './actions'
 const { SHOW_ALL } = VisibilityFilters
-​
+
 function visibilityFilter(state = SHOW_ALL, action) {
   switch (action.type) {
     case SET_VISIBILITY_FILTER:
@@ -61,7 +61,7 @@ function visibilityFilter(state = SHOW_ALL, action) {
       return state
   }
 }
-​
+
 function todos(state = [], action) {
   switch (action.type) {
     case ADD_TODO:
@@ -103,7 +103,83 @@ function todoApp(state = {}, action) {
 export default todoApp
 ```
 
+# Store
 
+It holds the current application state object, it lets you to dispatch actions and when the store is created you need to specify the reducer.
+
+The Store is the object that brings them together. The store has the following responsabilities:
+ * Holds applications state
+ * Allows access to state via ```getState()```
+ * Allows state to be updated via ```dispatch(action)```
+ * Registers listeners via ```suscribe(listener)```
+ * Handles unregistering of listeners via via the function returned by ```suscribe(listener)
+
+
+```javascript
+const { createStore } = Redux
+const store = createStore(counter)
+
+console.log(store.getState())
+store.dispatch({ type: 'INCREMENT' })
+store.suscribe(() => console.log(store.getState())
+
+// You can define an initial state
+cont store = createStore(todoApp, window.STATE_FROM_SERVER)
+```
+
+```javascript
+import {
+  addTodo,
+  toggleTodo,
+  setVisibilityFilter,
+  VisibilityFilters
+} from './actions'
+
+// Log the initial state
+console.log(store.getState())
+
+// Every time the state changes, log it
+// Note that subscribe() returns a function for unregistering the listener
+const unsubscribe = store.subscribe(() =>
+  console.log(store.getState())
+)
+
+// Dispatch some actions
+store.dispatch(addTodo('Learn about actions'))
+store.dispatch(addTodo('Learn about reducers'))
+store.dispatch(addTodo('Learn about store'))
+store.dispatch(toggleTodo(0))
+store.dispatch(toggleTodo(1))
+store.dispatch(setVisibilityFilter(VisibilityFilters.SHOW_COMPLETED))
+
+// Stop listening to state updates
+unsubscribe()
+```
+
+```javascript
+const createStore = reducer => {
+ let state
+ let listeners = []
+ 
+ const getState = () => state
+ 
+ const dispatch = action => {
+  state = reducer(state, action)
+  listeners.forEach(listeners => listeners())
+ }
+ 
+ const suscribe = listener => {
+  listeners.push(listener)
+  return () => {
+   listeners = listeners.filter(l => l !== listener)
+  }
+ }
+ 
+ dispatch({})
+ 
+ return { getState, dispatch, suscribe }
+}
+```
 
 ## Considerations
 
@@ -115,6 +191,8 @@ to keep the data separate from the UI state."
 
 * "Things you should never do inside a reducer: Mutate its arguments, Perform side effects like API calls and routing 
 transitions and Call non-pure functions, e.g. Date.now() or Math.random()."
+
+* "It's important to note that you'll only have a single store in a Redux application. When you want to split your data handling logic, you'll use reducer composition instead of many stores."
 
 
 
