@@ -17,7 +17,72 @@ These notes have been taken from the official documentation of Redux and links r
 A pure function is a function which:
   * Given the same input, will always return the same output.
   * Produces no side effects.
-  
+
+# Actions
+
+"Actions are payloads of information that send data from your application to your store. They are the only source of information for the store. You send them to the store using store.dispatch()."
+
+"Action creators are exactly that—functions that create actions. It's easy to conflate the terms “action” and “action creator”, so do your best to use the proper term."
+
+```javascript
+const ADD_TODO = 'ADD_TODO'
+
+{
+ type: ADD_TODO,
+ text: 'Build my first Redux app'
+}
+
+// Action creator
+function addTodo(text) {
+ return {
+  type: ADD_TODO,
+  text
+ }
+}
+
+// In traditional Flux, action creators often trigger a dispatch when invoked. In Redux this is not the case 
+dispatch(addTodo(text))
+
+// Alternatively, you can create a bound action creator that automatically dispatches
+const boundAddTodo = text => dispatch(addTodo(text))
+```
+
+```javascript
+/*
+ * action types
+ */
+
+export const ADD_TODO = 'ADD_TODO'
+export const TOGGLE_TODO = 'TOGGLE_TODO'
+export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
+
+/*
+ * other constants
+ */
+
+export const VisibilityFilters = {
+  SHOW_ALL: 'SHOW_ALL',
+  SHOW_COMPLETED: 'SHOW_COMPLETED',
+  SHOW_ACTIVE: 'SHOW_ACTIVE'
+}
+
+/*
+ * action creators
+ */
+
+export function addTodo(text) {
+  return { type: ADD_TODO, text }
+}
+
+export function toggleTodo(index) {
+  return { type: TOGGLE_TODO, index }
+}
+
+export function setVisibilityFilter(filter) {
+  return { type: SET_VISIBILITY_FILTER, filter }
+}
+```
+
 ## Reducer
 
 The state mutation in your APP needs to be described as a pure function. This function takes the previous state and 
@@ -193,6 +258,8 @@ to keep the data separate from the UI state."
 transitions and Call non-pure functions, e.g. Date.now() or Math.random()."
 
 * "It's important to note that you'll only have a single store in a Redux application. When you want to split your data handling logic, you'll use reducer composition instead of many stores."
+
+* "Action creators can be asynchronous and have side-effects."
 
 
 
