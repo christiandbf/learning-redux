@@ -1,0 +1,3 @@
+export const SEE_MESSAGE = 'SEE_MESSAGE';
+export const HIDE_MESSAGE = 'HIDE_MESSAGE';
+export const CHANGE_MESSAGE = 'CHANGE_MESSAGE';
