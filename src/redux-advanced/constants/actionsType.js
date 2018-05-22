@@ -1,0 +1,5 @@
+export const SELECT_ID = 'SELECT_ID';
+export const FETCH_DATA = 'FETCH_DATA';
+export const FECTH_DATA_REQUEST = 'FETCH_DATA';
+export const FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE';
+export const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS';
