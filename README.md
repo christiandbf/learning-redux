@@ -246,6 +246,15 @@ const createStore = reducer => {
 }
 ```
 
+## Practices
+
+### Redux Basics - React Native
+![Basics](https://github.com/christiandbf/learning-redux/blob/master/basics.png "Basics")
+
+### Redux Advanced - React Native & CoinMarketCap API
+![Basics](https://github.com/christiandbf/learning-redux/blob/master/advanced.png "Advanced")
+
+
 ## Considerations
 
 * "In Redux, all the application state is stored as a single object. It's a good idea to think of its shape before writing 
